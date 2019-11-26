@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coffee {
-    private String id;
-    private String name;
+	private String id;
+	private String name;
 }

@@ -36,7 +36,7 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 Create a class representing a type of coffee we wish to stock in our coffee catalog.
 
 `src/main/java/hello/Coffee.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/Coffee.java[]
 ----
@@ -47,7 +47,7 @@ NOTE: I use Lombok in this example to eliminate the boilerplate code for constru
 == Create a configuration class with Spring Beans supporting reactive Redis operations
 
 `src/main/java/hello/CoffeeConfiguration.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/CoffeeConfiguration.java[]
 ----
@@ -58,7 +58,7 @@ include::complete/src/main/java/hello/CoffeeConfiguration.java[]
 NOTE: Since we may (re)start our application multiple times, we should first remove any data that may still exist from previous executions. We do this with a `flushAll()` (Redis) server command. Once we've flushed any existing data, we create a small `Flux`, map each coffee name to a `Coffee` object, and save it to the reactive Redis repository. We then query the repo for all values and display them.
 
 `src/main/java/hello/CoffeeLoader.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/CoffeeLoader.java[]
 ----
@@ -67,7 +67,7 @@ include::complete/src/main/java/hello/CoffeeLoader.java[]
 == Create a RestController to provide an external interface for our application
 
 `src/main/java/hello/CoffeeController.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/CoffeeController.java[]
 ----
@@ -79,7 +79,7 @@ Although it is possible to package this service as a traditional link:/understan
 
 
 `src/main/java/hello/Application.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/Application.java[]
 ----

@@ -7,15 +7,15 @@ import reactor.core.publisher.Flux;
 
 @RestController
 public class CoffeeController {
-    private final ReactiveRedisOperations<String, Coffee> coffeeOps;
+	private final ReactiveRedisOperations<String, Coffee> coffeeOps;
 
-    CoffeeController(ReactiveRedisOperations<String, Coffee> coffeeOps) {
-        this.coffeeOps = coffeeOps;
-    }
+	CoffeeController(ReactiveRedisOperations<String, Coffee> coffeeOps) {
+		this.coffeeOps = coffeeOps;
+	}
 
-    @GetMapping("/coffees")
-    public Flux<Coffee> all() {
-        return coffeeOps.keys("*")
-                .flatMap(coffeeOps.opsForValue()::get);
-    }
+	@GetMapping("/coffees")
+	public Flux<Coffee> all() {
+		return coffeeOps.keys("*")
+				.flatMap(coffeeOps.opsForValue()::get);
+	}
 }
