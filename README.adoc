@@ -1,5 +1,5 @@
-:spring_version: current
-:spring_boot_version: 2.2.1.RELEASE
+:spring_version: 5.3.24
+:spring_boot_version: 2.7.6
 :Controller: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
 :DispatcherServlet: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
 :SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
@@ -10,30 +10,39 @@
 :project_id: gs-spring-data-reactive-redis
 This guide walks you through the process of creating a functional reactive application that uses Spring Data to interact with Redis using the non-blocking Lettuce driver.
 
-== What you'll build
+== What You Will build
 
 You'll build a Spring application that uses https://projects.spring.io/spring-data-redis/[Spring Data Redis] and https://projectreactor.io/[Project Reactor] to interact with a Redis data store reactively, storing and retrieving `Coffee` objects without blocking. This application uses Reactor's `Publisher` implementations based upon the Reactive Streams specification, namely `Mono` (for a Publisher returning 0 or 1 value) and `Flux` (for a Publisher returning 0 to n values).
 
-== What you'll need
+== What You Need
 
-:java_version: 1.8
+:java_version: 17
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/prereq_editor_jdk_buildtools.adoc[]
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/how_to_complete_this_guide.adoc[]
 
+[[scratch]]
+== Starting with Spring Initializr
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/hide-show-gradle.adoc[]
+You can use this https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.6&packaging=jar&jvmVersion=1.8&groupId=com.example&artifactId=demo&name=demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.demo&dependencies=data-redis-reactive,lombok,webflux[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/hide-show-maven.adoc[]
+To manually initialize the project:
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/hide-show-sts.adoc[]
+. Navigate to https://start.spring.io.
+This service pulls in all the dependencies you need for an application and does most of the setup for you.
+. Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
+. Click *Dependencies* and select *Spring Reactive Web*, *Spring Data Reactive Redis*, and *Lombok*.
+. Click *Generate*.
+. Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
+NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
 
+NOTE: You can also fork the project from Github and open it in your IDE or other editor.
 
 [[initial]]
-== Create a domain class
+== Create a Domain Class
 
-Create a class representing a type of coffee we wish to stock in our coffee catalog.
+Create a class representing a type of coffee we wish to stock in our coffee catalog:
 
 `src/main/java/hello/Coffee.java`
 [source,java,tabsize=2]
@@ -44,7 +53,9 @@ include::complete/src/main/java/hello/Coffee.java[]
 NOTE: I use Lombok in this example to eliminate the boilerplate code for constructors and so-called "data class" methods ( accessors/mutators, `equals()`, `toString()`, & `hashCode()`).
 
 
-== Create a configuration class with Spring Beans supporting reactive Redis operations
+== Create a Configuration Class
+
+Create a class that includes Spring Beans that support reactive Redis operations:
 
 `src/main/java/hello/CoffeeConfiguration.java`
 [source,java,tabsize=2]
@@ -53,7 +64,9 @@ include::complete/src/main/java/hello/CoffeeConfiguration.java[]
 ----
 
 
-== Create a Spring Bean to load some sample data to our application when we start it
+== Create a Spring Bean to Load Data
+
+Create a Spring Bean to load sample data for our application when we start it:
 
 NOTE: Since we may (re)start our application multiple times, we should first remove any data that may still exist from previous executions. We do this with a `flushAll()` (Redis) server command. Once we've flushed any existing data, we create a small `Flux`, map each coffee name to a `Coffee` object, and save it to the reactive Redis repository. We then query the repo for all values and display them.
 
@@ -64,7 +77,9 @@ include::complete/src/main/java/hello/CoffeeLoader.java[]
 ----
 
 
-== Create a RestController to provide an external interface for our application
+== Create a RestController
+
+Create a `RestController` to provide an external interface for our application:
 
 `src/main/java/hello/CoffeeController.java`
 [source,java,tabsize=2]
@@ -73,9 +88,9 @@ include::complete/src/main/java/hello/CoffeeController.java[]
 ----
 
 
-== Make the application executable
+== Make the Application Executable
 
-Although it is possible to package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach demonstrated below creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Netty[Netty] asynchronous "container" as the HTTP runtime instead of deploying to an external instance.
+Although you can package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach shown here creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Netty[Netty] an asynchronous "container" as the HTTP runtime instead of deploying to an external instance.
 
 
 `src/main/java/hello/Application.java`
@@ -98,10 +113,6 @@ Now that the application is running, you can test it by accessing `http://localh
 
 == Summary
 
-Congratulations! You've just developed a Spring application that uses Spring Data and Redis for fully reactive, non-blocking database access! 
-
-
-
+Congratulations! You have developed a Spring application that uses Spring Data and Redis for fully reactive, non-blocking database access!
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/footer.adoc[]
-
