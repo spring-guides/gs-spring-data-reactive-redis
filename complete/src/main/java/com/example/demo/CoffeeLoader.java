@@ -1,4 +1,4 @@
-package hello;
+package com.example.demo;
 
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisOperations;

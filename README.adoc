@@ -44,10 +44,10 @@ NOTE: You can also fork the project from Github and open it in your IDE or other
 
 Create a class representing a type of coffee we wish to stock in our coffee catalog:
 
-`src/main/java/hello/Coffee.java`
+`src/main/java/com/example/demo/Coffee.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/Coffee.java[]
+include::complete/src/main/java/com/example/demo/Coffee.java[]
 ----
 
 NOTE: I use Lombok in this example to eliminate the boilerplate code for constructors and so-called "data class" methods ( accessors/mutators, `equals()`, `toString()`, & `hashCode()`).
@@ -57,10 +57,10 @@ NOTE: I use Lombok in this example to eliminate the boilerplate code for constru
 
 Create a class that includes Spring Beans that support reactive Redis operations:
 
-`src/main/java/hello/CoffeeConfiguration.java`
+`src/main/java/com/example/demo/CoffeeConfiguration.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/CoffeeConfiguration.java[]
+include::complete/src/main/java/com/example/demo/CoffeeConfiguration.java[]
 ----
 
 
@@ -70,10 +70,10 @@ Create a Spring Bean to load sample data for our application when we start it:
 
 NOTE: Since we may (re)start our application multiple times, we should first remove any data that may still exist from previous executions. We do this with a `flushAll()` (Redis) server command. Once we've flushed any existing data, we create a small `Flux`, map each coffee name to a `Coffee` object, and save it to the reactive Redis repository. We then query the repo for all values and display them.
 
-`src/main/java/hello/CoffeeLoader.java`
+`src/main/java/com/example/demo/CoffeeLoader.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/CoffeeLoader.java[]
+include::complete/src/main/java/com/example/demo/CoffeeLoader.java[]
 ----
 
 
@@ -81,10 +81,10 @@ include::complete/src/main/java/hello/CoffeeLoader.java[]
 
 Create a `RestController` to provide an external interface for our application:
 
-`src/main/java/hello/CoffeeController.java`
+`src/main/java/com/example/demo/CoffeeController.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/CoffeeController.java[]
+include::complete/src/main/java/com/example/demo/CoffeeController.java[]
 ----
 
 
@@ -93,10 +93,10 @@ include::complete/src/main/java/hello/CoffeeController.java[]
 Although you can package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach shown here creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Netty[Netty] an asynchronous "container" as the HTTP runtime instead of deploying to an external instance.
 
 
-`src/main/java/hello/Application.java`
+`src/main/java/com/example/demo/DemoApplication.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/Application.java[]
+include::complete/src/main/java/com/example/demo/DemoApplication.java[]
 ----
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/spring-boot-application.adoc[]
