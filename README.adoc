@@ -1,16 +1,10 @@
-:spring_version: current
-:spring_boot_version: 3.1.0
-:Controller: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
-:DispatcherServlet: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
-:SpringApplication: https://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
-:ResponseBody: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
 :toc:
 :icons: font
 :source-highlighter: prettify
 :project_id: gs-spring-data-reactive-redis
 This guide walks you through the process of creating a functional reactive application that uses Spring Data to interact with Redis using the non-blocking Lettuce driver.
 
-== What You Will build
+== What You Will Build
 
 You'll build a Spring application that uses https://projects.spring.io/spring-data-redis/[Spring Data Redis] and https://projectreactor.io/[Project Reactor] to interact with a Redis data store reactively, storing and retrieving `Coffee` objects without blocking. This application uses Reactor's `Publisher` implementations based upon the Reactive Streams specification, namely `Mono` (for a Publisher returning 0 or 1 value) and `Flux` (for a Publisher returning 0 to n values).
 
