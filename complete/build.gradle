@@ -18,9 +18,14 @@ repositories {
 	mavenCentral()
 }
 
+def isAppleSilicon() {
+	return System.getProperty("os.name") == "Mac OS X" && System.getProperty("os.arch") == "aarch64"
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	if (isAppleSilicon()) { runtimeOnly('io.netty:netty-resolver-dns-native-macos:4.1.94.Final:osx-aarch_64') }
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
