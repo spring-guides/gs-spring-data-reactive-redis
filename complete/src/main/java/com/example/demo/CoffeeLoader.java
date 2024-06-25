@@ -23,7 +23,7 @@ public class CoffeeLoader {
 		factory.getReactiveConnection().serverCommands().flushAll().thenMany(
 				Flux.just("Jet Black Redis", "Darth Redis", "Black Alert Redis")
 						.map(name -> new Coffee(UUID.randomUUID().toString(), name))
-						.flatMap(coffee -> coffeeOps.opsForValue().set(coffee.getId(), coffee)))
+						.flatMap(coffee -> coffeeOps.opsForValue().set(coffee.id(), coffee)))
 				.thenMany(coffeeOps.keys("*")
 						.flatMap(coffeeOps.opsForValue()::get))
 				.subscribe(System.out::println);
