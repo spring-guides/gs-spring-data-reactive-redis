@@ -3,6 +3,10 @@
 :source-highlighter: prettify
 :project_id: gs-spring-data-reactive-redis
 :java_version: 17
+:build_system: maven
+:build_name: demo
+:build_version: 0.0.1-SNAPSHOT
+:network_container: guide-redis
 
 This guide walks you through the process of creating a functional reactive application that uses Spring Data to interact with Redis using the non-blocking Lettuce driver.
 
@@ -91,29 +95,83 @@ Create a `RestController` to provide an external interface for our application:
 include::complete/src/main/java/com/example/demo/CoffeeController.java[]
 ----
 
+== Run the Application
 
-== Make the Application Executable
+You can run the main method through your IDE.
+Note that, if you have cloned the project from the solution repository, your IDE may look in the wrong place for the `compose.yaml` file.
+You can configure your IDE to look in the correct place or you could use the command line to run the application.
+The `./gradlew bootRun` and `./mvnw spring-boot:run` commands will launch the application and automatically find the compose.yaml file.
 
-Although you can package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach shown here creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Netty[Netty] an asynchronous "container" as the HTTP runtime instead of deploying to an external instance.
+== Test the Application
 
+With the application running, run the following command from a new terminal:
+[source,bash]
+```
+curl http://localhost:8080/coffees
+```
 
-`src/main/java/com/example/demo/DemoApplication.java`
-[source,java,tabsize=2]
+You should see the following output:
+[source,json]
+```
+[
+  {
+    "id": "04ce0843-c9f8-40f6-942f-1ff643c1d426",
+    "name": "Jet Black Redis"
+  },
+  {
+    "id": "e2a0d798-5fa4-48a2-a45c-7770d8bb82bf",
+    "name": "Black Alert Redis"
+  },
+  {
+    "id": "13f13e3a-0798-44b7-8ae4-b319b227bb19",
+    "name": "Darth Redis"
+  }
+]
+```
+
+== Preparing to Build the Application
+
+To run the code without Spring Boot Docker Compose support, you need a version of Redis running locally to connect to.
+To do this, you can use Docker Compose, but you must first make two changes to the `compose.yaml` file.
+First, modify the `ports` entry in `compose.yaml` to be `'6379:6379'`.
+Second, add a `container_name`.
+
+The `compose.yaml` should now be:
 ----
-include::complete/src/main/java/com/example/demo/DemoApplication.java[]
+services:
+  redis:
+    container_name: 'guide-redis'
+    image: 'redis:latest'
+    ports:
+      - '6379:6379'
 ----
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/spring-boot-application.adoc[]
+You can now run `docker compose up` to start the Redis server.
+Now you should have an external Redis server that is ready to accept requests.
+You can rerun the application and see the same output using your external Redis server.
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/build_an_executable_jar_subhead.adoc[]
+NOTE: No configuration is required in the `application.properties` file because the default values match the Redis server configuration in `compose.yaml`. Specifically, the properties `spring.data.redis.host` and `spring.data.redis.port` default to `localhost` and `6379` respectively.
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/build_an_executable_jar_with_both.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/build_and_execute_guide.adoc[]
 
+== Test the Application in Docker
 
-== Test the application
+If you ran the application using a Docker instruction above, a simple curl command from a terminal or command line will no longer work.
+This is because we are running our containers in a https://docs.docker.com/compose/networking/[Docker network] that is not accessible from the terminal or command line. To run curl commands, we can start a third container to run our curl commands and attach it to the same network.
 
-Now that the application is running, you can test it by accessing `http://localhost:8080/coffees` from HTTPie, curl, or your favorite browser.
+First, obtain an interactive shell to a new container that is running on the same network as the Redis container and the application:
+[source, bash]
+----
+docker run --rm --network container:guide-redis -it alpine
+----
 
+Next, from the shell inside the container, install curl:
+[source, bash]
+----
+apk add curl
+----
+
+Finally, you can run the curl commands as described in <<_test_the_application>>.
 
 == Summary
 
