@@ -34,14 +34,14 @@ As mentioned earlier, this guide assumes that you use Docker Compose support in 
 [[scratch]]
 == Starting with Spring Initializr
 
-You can use this https://start.spring.io/#!type=maven-project&language=java&packaging=jar&groupId=com.example&artifactId=demo&name=demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.demo&dependencies=data-redis-reactive,lombok,webflux,docker-compose[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
+You can use this https://start.spring.io/#!type=maven-project&language=java&packaging=jar&groupId=com.example&artifactId=demo&name=demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.demo&dependencies=data-redis-reactive,webflux,docker-compose[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
 
 To manually initialize the project:
 
 . Navigate to https://start.spring.io.
 This service pulls in all the dependencies you need for an application and does most of the setup for you.
 . Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
-. Click *Dependencies* and select *Spring Reactive Web*, *Spring Data Reactive Redis*, *Docker Compose Support* and *Lombok*.
+. Click *Dependencies* and select *Spring Reactive Web*, *Spring Data Reactive Redis* and *Docker Compose Support*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
@@ -50,16 +50,13 @@ NOTE: If your IDE has the Spring Initializr integration, you can complete this p
 [[initial]]
 == Create a Domain Class
 
-Create a class representing a type of coffee we wish to stock in our coffee catalog:
+Create a record representing a type of coffee we wish to stock in our coffee catalog:
 
 `src/main/java/com/example/demo/Coffee.java`
 [source,java,tabsize=2]
 ----
 include::complete/src/main/java/com/example/demo/Coffee.java[]
 ----
-
-NOTE: I use Lombok in this example to eliminate the boilerplate code for constructors and so-called "data class" methods ( accessors/mutators, `equals()`, `toString()`, & `hashCode()`).
-
 
 == Create a Configuration Class
 
@@ -70,7 +67,6 @@ Create a class that includes Spring Beans that support reactive Redis operations
 ----
 include::complete/src/main/java/com/example/demo/CoffeeConfiguration.java[]
 ----
-
 
 == Create a Spring Bean to Load Data
 
