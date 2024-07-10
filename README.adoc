@@ -16,9 +16,9 @@ You'll build a Spring application that uses https://projects.spring.io/spring-da
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/guide_introduction.adoc[]
 
-== Setting up the Redis server
+== Setting up the Redis Server
 
-Before you can build a messaging application, you need to set up the server that will
+Before you can build a messaging application, you need to set up the server to
 handle receiving and sending messages.
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/docker_compose_support.adoc[]
 
@@ -28,7 +28,7 @@ If you choose to run the Redis server yourself instead of using Spring Boot Dock
 - Manually run the `compose.yaml` file with `docker compose up`
 
 If you go with any of these alternate approaches, you should remove the `spring-boot-docker-compose` dependency from the Maven or Gradle build file.
-You will also need to add configuration to an `application.properties` file, as described in greater detail in the <<_preparing_to_build_the_application>> section.
+You also need to add configuration to an `application.properties` file, as described in greater detail in the <<_preparing_to_build_the_application>> section.
 As mentioned earlier, this guide assumes that you use Docker Compose support in Spring Boot, so additional changes to `application.properties` are not required at this point.
 
 [[scratch]]
@@ -41,7 +41,7 @@ To manually initialize the project:
 . Navigate to https://start.spring.io.
 This service pulls in all the dependencies you need for an application and does most of the setup for you.
 . Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
-. Click *Dependencies* and select *Spring Reactive Web*, *Spring Data Reactive Redis* and *Docker Compose Support*.
+. Click *Dependencies* and select *Spring Reactive Web*, *Spring Data Reactive Redis*, and *Docker Compose Support*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
@@ -152,10 +152,10 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 
 == Test the Application in Docker
 
-If you ran the application using a Docker instruction above, a simple curl command from a terminal or command line will no longer work.
-This is because we are running our containers in a https://docs.docker.com/compose/networking/[Docker network] that is not accessible from the terminal or command line. To run curl commands, we can start a third container to run our curl commands and attach it to the same network.
+If you ran the application using a Docker instruction (shown earlier), a simple curl command from a terminal or command line will no longer work.
+This is because we run our containers in a https://docs.docker.com/compose/networking/[Docker network] that is not accessible from the terminal or command line. To run curl commands, we can start a third container to run our curl commands and attach it to the same network.
 
-First, obtain an interactive shell to a new container that is running on the same network as the Redis container and the application:
+First, obtain an interactive shell to a new container that runs on the same network as the Redis container and the application:
 [source, bash]
 ----
 docker run --rm --network container:guide-redis -it alpine
